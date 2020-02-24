@@ -16,3 +16,6 @@
 [submodule "vim/pack/vendor/start/vim-code-dark"]
 	path = vim/pack/vendor/start/vim-code-dark
 	url = https://github.com/tomasiser/vim-code-dark.git
+[submodule "dotbot"]
+	path = dotbot
+	url = https://github.com/anishathalye/dotbot
