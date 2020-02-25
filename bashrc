@@ -123,6 +123,8 @@ export NVM_DIR="$HOME/.nvm"
 # vim mode
 set -o vi
 
+export EDITOR=vim
+
 # !!! KEEP THIS LAST
 # local overrides
 if [ -f ~/.bashrc_local ]; then
