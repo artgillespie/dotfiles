@@ -125,6 +125,8 @@ set -o vi
 
 export EDITOR=vim
 
+source ~/.dotfiles/aliases.sh
+
 # !!! KEEP THIS LAST
 # local overrides
 if [ -f ~/.bashrc_local ]; then
