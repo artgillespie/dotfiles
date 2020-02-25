@@ -10,6 +10,7 @@
 - link:
     ~/.dotfiles: ''
     ~/.bashrc: bashrc
+    ~/.gitconfig: gitconfig
     ~/.tmux.conf: tmux.conf
     ~/.vim: vim
     ~/.vimrc: vimrc

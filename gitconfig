@@ -1,3 +1,5 @@
 [user]
 	email = art@trainify.io
 	name = Art Gillespie
+[url "git@github.com:"]
+	insteadOf = https://github.com/

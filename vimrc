@@ -1,3 +1,5 @@
+filetype plugin on
+
 set tabstop=2
 set shiftwidth=2
 " tabs are spaces, as god intended
