@@ -4,5 +4,7 @@
 :helptags ./vim/pack/vendor/start/ctrlp/doc
 :helptags ./vim/pack/vendor/start/vim-go/doc
 :helptags ./vim/pack/vendor/start/nerdtree/doc
+:helptags ./vim/pack/vendor/start/vim-prettier/doc
+
 
 

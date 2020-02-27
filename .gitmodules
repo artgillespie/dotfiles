@@ -20,3 +20,6 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
+[submodule "vim/pack/vendor/start/vim-prettier"]
+	path = vim/pack/vendor/start/vim-prettier
+	url = https://github.com/prettier/vim-prettier.git

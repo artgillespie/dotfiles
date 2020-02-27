@@ -17,3 +17,6 @@ noremap <F7> :NERDTreeToggle<CR>
 " please stop leaving swp files everywhere, thx
 set directory=~/tmp
 
+" prettier format on save 
+let g:prettier#autoformat_require_pragma = 0
+
