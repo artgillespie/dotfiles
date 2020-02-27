@@ -1,9 +1,12 @@
-filetype plugin on
+filetype plugin indent on
 
 set tabstop=2
 set shiftwidth=2
 " tabs are spaces, as god intended
 set expandtab
+
+set autoindent
+set smartindent
 
 " vim-code-dark (make vim look like vscode)
 colorscheme codedark
