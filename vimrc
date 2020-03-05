@@ -8,6 +8,9 @@ set expandtab
 set autoindent
 set smartindent
 
+" for vim-go, automatically save file when running :GoBuild
+set autowrite
+
 " vim-code-dark (make vim look like vscode)
 colorscheme codedark
 
@@ -22,4 +25,14 @@ set directory=~/tmp
 
 " prettier format on save 
 let g:prettier#autoformat_require_pragma = 0
+
+" golang
+"
+"
+autocmd FileType go nmap <leader>b  <Plug>(go-build)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>t <Plug>(go-test)
+autocmd FileType go nmap <leader>t <Plug>(go-test-func)
+let g:go_fmt_command = "goimports"
+
 
