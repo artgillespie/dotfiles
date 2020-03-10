@@ -23,3 +23,6 @@
 [submodule "vim/pack/vendor/start/vim-prettier"]
 	path = vim/pack/vendor/start/vim-prettier
 	url = https://github.com/prettier/vim-prettier.git
+[submodule "vim/pack/vendor/start/ultisnips"]
+	path = vim/pack/vendor/start/ultisnips
+	url = https://github.com/SirVer/ultisnips.git
