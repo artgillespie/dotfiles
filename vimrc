@@ -35,4 +35,8 @@ autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <leader>t <Plug>(go-test-func)
 let g:go_fmt_command = "goimports"
 
+" project-specific vimrc files
+"
+set exrc
+set secure
 

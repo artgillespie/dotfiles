@@ -6,7 +6,6 @@
 :helptags ./vim/pack/vendor/start/nerdtree/doc
 :helptags ./vim/pack/vendor/start/vim-prettier/doc
 :helptags ./vim/pack/vendor/start/ultisnips/doc
-
-
+:helptags ./vim/pack/vendor/start/YouCompleteMe/doc
 
 
