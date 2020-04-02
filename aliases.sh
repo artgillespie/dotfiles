@@ -10,4 +10,11 @@ alias ngcp="ngurl | xclip -sel clip"
 
 alias pgl="psql --host=localhost"
 
+# start dev ics container
+
+alias dev-ics="/home/art/dev/voyage/docker-dev/run.sh --ics --nvidia --host --priv"
+
+# switch to cockpit-apps dev
+alias cdca="cd ~/dev/voyage/cockpit-apps"
+
 

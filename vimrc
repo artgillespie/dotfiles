@@ -17,8 +17,13 @@ colorscheme codedark
 " show line numbers
 set number
 
-" toggle NERD tree with F7
+" NERDTree
+"
+" toggle with F7
 noremap <F7> :NERDTreeToggle<CR>
+" show hidden files by default; use I (shift+i) to toggle
+let NERDTreeShowHidden=1
+
 
 " please stop leaving swp files everywhere, thx
 set directory=~/tmp
@@ -34,6 +39,7 @@ autocmd FileType go nmap <leader>r  <Plug>(go-run)
 autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <leader>t <Plug>(go-test-func)
 let g:go_fmt_command = "goimports"
+
 
 " project-specific vimrc files
 "
