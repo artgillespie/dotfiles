@@ -17,4 +17,7 @@ alias dev-ics="/home/art/dev/voyage/docker-dev/run.sh --ics --nvidia --host --pr
 # switch to cockpit-apps dev
 alias cdca="cd ~/dev/voyage/cockpit-apps"
 
+# switch to commander dev
+alias cdcdr="cd ~/dev/voyage/commander"
+
 
