@@ -1,5 +1,7 @@
 filetype plugin indent on
 
+set encoding=utf-8
+
 set tabstop=2
 set shiftwidth=2
 " tabs are spaces, as god intended
@@ -40,9 +42,18 @@ autocmd FileType go nmap <leader>t <Plug>(go-test)
 autocmd FileType go nmap <leader>t <Plug>(go-test-func)
 let g:go_fmt_command = "goimports"
 
+autocmd FileType cpp setlocal shiftwidth=4 tabstop=4
+autocmd FileType cpp nmap gd :YcmCompleter GoTo<CR>
+autocmd FileType cpp nmap <F2> :YcmCompleter FixIt<CR>
+autocmd FileType cpp nmap <c-t> <c-o>
 
 " project-specific vimrc files
 "
 set exrc
 set secure
+
+echom ">^.^<"
+
+imap <c-u> <esc>viwUi
+nmap <c-u> viwU
 
