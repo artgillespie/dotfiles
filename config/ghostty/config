@@ -48,7 +48,8 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
-# TokyoNight Night — matches LazyVim default colorscheme
+shell-integration-features = ssh-terminfo,ssh-env
 theme = TokyoNight Night
 link-previews = true
+
 
