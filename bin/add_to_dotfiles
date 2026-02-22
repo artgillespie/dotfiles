@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# add_to_dotfiles <file-or-directory>
+#
+# 1. Scans target for secrets using pi
+# 2. Moves it into ~/src/dotfiles/, mirroring its path relative to $HOME
+# 3. Symlinks the original location back to dotfiles
+# 4. Appends the symlink call to install.sh
+
+set -euo pipefail
+
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+
+# ── usage ──────────────────────────────────────────────────────────────────────
+if [[ $# -ne 1 ]]; then
+    echo "Usage: add_to_dotfiles <file-or-directory>" >&2
+    exit 1
+fi
+
+TARGET="$(realpath "$1")"
+
+if [[ ! -e "$TARGET" ]]; then
+    echo "Error: '$TARGET' does not exist." >&2
+    exit 1
+fi
+
+if [[ -L "$TARGET" ]]; then
+    echo "Error: '$TARGET' is already a symlink — already in dotfiles?" >&2
+    exit 1
+fi
+
+if [[ "$TARGET" != "$HOME/"* ]]; then
+    echo "Error: '$TARGET' is not under \$HOME." >&2
+    exit 1
+fi
+
+# ── relative path and destination ─────────────────────────────────────────────
+REL="${TARGET#$HOME/}"
+DEST="$DOTFILES/$REL"
+
+if [[ -e "$DEST" ]]; then
+    echo "Error: '$DEST' already exists in dotfiles." >&2
+    exit 1
+fi
+
+# ── secret scan ───────────────────────────────────────────────────────────────
+echo "==> Scanning for secrets ..."
+
+FILES=()
+if [[ -d "$TARGET" ]]; then
+    while IFS= read -r -d '' f; do
+        FILES+=("$f")
+    done < <(find "$TARGET" -type f -not -path '*/.git/*' -print0)
+else
+    FILES=("$TARGET")
+fi
+
+AT_ARGS=()
+for f in "${FILES[@]}"; do
+    AT_ARGS+=("@$f")
+done
+
+SCAN_RESULT=$(pi -p --no-tools "${AT_ARGS[@]}" \
+    "Scan these files for secrets: API keys, tokens, passwords, credentials, \
+or other sensitive values. List any findings with the file path and line number. \
+If nothing sensitive is found in any file, respond with exactly: CLEAN")
+
+if [[ "$SCAN_RESULT" == "CLEAN" ]]; then
+    echo "    pi: CLEAN"
+else
+    echo ""
+    echo "  ┌─ pi findings ────────────────────────────────────────────────────"
+    echo "$SCAN_RESULT" | sed 's/^/  │ /'
+    echo "  └──────────────────────────────────────────────────────────────────"
+    echo ""
+    read -r -p "  Proceed anyway? (y/N) " CONFIRM
+    if [[ "$CONFIRM" != "y" && "$CONFIRM" != "Y" ]]; then
+        echo "Aborted."
+        exit 1
+    fi
+fi
+
+# ── move and symlink ───────────────────────────────────────────────────────────
+echo "==> Moving to dotfiles ..."
+mkdir -p "$(dirname "$DEST")"
+mv "$TARGET" "$DEST"
+ln -sf "$DEST" "$TARGET"
+echo "    $TARGET → $DEST"
+
+# ── append to install.sh ───────────────────────────────────────────────────────
+echo "==> Updating install.sh ..."
+NEW_LINE="symlink \"\$DOTFILES/$REL\" \"\$HOME/$REL\""
+python3 - "$DOTFILES/install.sh" "$NEW_LINE" << 'PYEOF'
+import sys
+path, new_line = sys.argv[1], sys.argv[2]
+lines = open(path).readlines()
+# Insert before the blank line that precedes the final echo "Done." block
+for i in range(len(lines) - 1, -1, -1):
+    if lines[i].strip().startswith('echo ""'):
+        lines.insert(i, new_line + '\n')
+        break
+else:
+    lines.append(new_line + '\n')
+open(path, 'w').writelines(lines)
+PYEOF
+echo "    added: $NEW_LINE"
+
+echo ""
+echo "Done. Review with: git -C \"$DOTFILES\" diff"

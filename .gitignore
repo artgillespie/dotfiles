@@ -1,0 +1,15 @@
+# Machine-local overrides — never commit these
+*.local
+
+# macOS
+.DS_Store
+
+# nvim generated files (mirrors ~/.config/nvim/.gitignore)
+config/nvim/tt.*
+config/nvim/.tests
+config/nvim/doc/tags
+config/nvim/debug
+config/nvim/.repro
+config/nvim/foo.*
+config/nvim/*.log
+config/nvim/data
