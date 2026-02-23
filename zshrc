@@ -1,3 +1,8 @@
+# Powerlevel10k instant prompt — must stay at the very top of .zshrc.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
@@ -8,7 +13,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="tokyonight"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -81,16 +86,34 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
+export EDITOR='nvim'
+export GIT_EDITOR='nvim'
+
 # Compilation flags
 # export ARCHFLAGS="-arch $(uname -m)"
 
 export PATH="$HOME/src/dotfiles/bin:$HOME/.local/bin:$PATH"
 
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export EDITOR=nvim
 
-# Machine-local config (not tracked in dotfiles)
-[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+# handy utility for using fzf to kill processes
+fzkp() {
+  local pid
+  pid=$(ps -ef | fzf --header-lines=1 --layout=reverse --multi | awk '{print $2}')
+  if [ -n "$pid" ]; then
+    echo "$pid" | xargs kill -9
+    echo "Process(es) terminated."
+  else
+    echo "No process selected."
+  fi
+}
+
+# local files (don't track in dotfiles)
+[[ ! -f ~/.zshrc.local ]] || source ~/.zshrc.local
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
