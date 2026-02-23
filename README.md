@@ -36,6 +36,7 @@ git clone git@github.com:artgillespie/dotfiles ~/src/dotfiles
 Then create the machine-local files manually:
 
 **`~/.gitconfig.local`**
+
 ```ini
 [user]
     name  = Your Name
@@ -43,6 +44,7 @@ Then create the machine-local files manually:
 ```
 
 **`~/.zprofile.local`** (macOS/Homebrew)
+
 ```sh
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 ```
@@ -56,12 +58,14 @@ add_to_dotfiles ~/.config/some-tool/config
 ```
 
 This will:
+
 1. Scan the file (or directory) for secrets using `pi`
 2. Move it into `~/src/dotfiles/`, mirroring its path relative to `$HOME`
 3. Symlink the original location back to dotfiles
 4. Append the symlink call to `install.sh`
 
 Then review and commit:
+
 ```sh
 git -C ~/src/dotfiles diff
 git -C ~/src/dotfiles commit -am "add some-tool config"
