@@ -5,7 +5,8 @@ Personal dotfiles for macOS and Linux, managed with symlinks.
 ## What's tracked
 
 ```
-install.sh              — run on a fresh machine to set up all symlinks
+bootstrap.sh            — installs all tools (zsh, oh-my-zsh, plugins, neovim, apt pkgs)
+install.sh              — run after bootstrap to set up all symlinks
 bin/add_to_dotfiles     — utility to add new configs safely
 zshrc / zprofile        — portable shell config
 tmux.conf               — tmux config
@@ -30,7 +31,8 @@ if they don't exist — so a fresh clone works before any locals are created.
 
 ```sh
 git clone git@github.com:artgillespie/dotfiles ~/src/dotfiles
-~/src/dotfiles/install.sh
+~/src/dotfiles/bootstrap.sh   # installs zsh, oh-my-zsh, plugins, neovim, etc.
+~/src/dotfiles/install.sh     # symlinks all dotfiles
 ```
 
 Then create the machine-local files manually:
