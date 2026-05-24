@@ -19,7 +19,6 @@ echo "Installing dotfiles from $DOTFILES ..."
 # ── shell ──────────────────────────────────────────────────────────────────────
 symlink "$DOTFILES/zshrc" "$HOME/.zshrc"
 symlink "$DOTFILES/zprofile" "$HOME/.zprofile"
-symlink "$DOTFILES/p10k.zsh" "$HROM/.p10.zsh"
 
 # ── git ────────────────────────────────────────────────────────────────────────
 symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"
@@ -37,6 +36,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
   symlink "$DOTFILES/config/ghostty/config" \
     "$HOME/Library/Application Support/com.mitchellh.ghostty/config"
 fi
+
+symlink "$DOTFILES/src/dotfiles/.local/bin/scopy" "$HOME/src/dotfiles/.local/bin/scopy"
 
 echo ""
 echo "Done."
