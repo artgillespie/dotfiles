@@ -7,8 +7,9 @@ symlink() {
   local src="$1" dst="$2"
   mkdir -p "$(dirname "$dst")"
   if [[ -e "$dst" && ! -L "$dst" ]]; then
-    echo "  SKIP (real file exists, remove manually): $dst"
-    return
+    local backup="${dst}.bak.$(date +%Y%m%d%H%M%S)"
+    mv "$dst" "$backup"
+    echo "  backed up existing file: $dst -> $backup"
   fi
   ln -sf "$src" "$dst"
   echo "  linked: $dst"
@@ -19,6 +20,7 @@ echo "Installing dotfiles from $DOTFILES ..."
 # ── shell ──────────────────────────────────────────────────────────────────────
 symlink "$DOTFILES/zshrc" "$HOME/.zshrc"
 symlink "$DOTFILES/zprofile" "$HOME/.zprofile"
+symlink "$DOTFILES/p10k.zsh" "$HOME/.p10k.zsh"
 
 # ── git ────────────────────────────────────────────────────────────────────────
 symlink "$DOTFILES/gitconfig" "$HOME/.gitconfig"

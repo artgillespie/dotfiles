@@ -72,6 +72,16 @@ else
     ok "zsh-autosuggestions already installed"
 fi
 
+# zsh-completions
+if [[ ! -d "$ZSH_CUSTOM/plugins/zsh-completions" ]]; then
+    info "Installing zsh-completions ..."
+    git clone --depth=1 https://github.com/zsh-users/zsh-completions \
+        "$ZSH_CUSTOM/plugins/zsh-completions"
+    ok "zsh-completions installed"
+else
+    ok "zsh-completions already installed"
+fi
+
 # powerlevel10k
 if [[ ! -d "$ZSH_CUSTOM/themes/powerlevel10k" ]]; then
     info "Installing powerlevel10k ..."
@@ -84,7 +94,8 @@ fi
 
 # ── 4. Neovim (latest, not the ancient apt version) ────────────────────────────
 
-NVIM_VERSION="v0.11.0"  # bump this when a new stable release drops
+NVIM_VERSION="v0.12.2"  # bump this when a new stable release drops
+NVIM_SHA256="31cf85945cb600d96cdf69f88bc68bec814acbff50863c5546adef3a1bcef260"
 NVIM_DIR="/opt/nvim-linux-x86_64"
 NVIM_BIN="/usr/local/bin/nvim"
 
@@ -99,6 +110,11 @@ else
     TMPDIR=$(mktemp -d)
     curl -fSL -o "$TMPDIR/nvim.tar.gz" \
         "https://github.com/neovim/neovim/releases/download/${NVIM_VERSION}/nvim-linux-x86_64.tar.gz"
+    echo "${NVIM_SHA256}  $TMPDIR/nvim.tar.gz" | sha256sum --check --status || {
+        echo "checksum mismatch for nvim-linux-x86_64.tar.gz" >&2
+        rm -rf "$TMPDIR"
+        exit 1
+    }
     sudo rm -rf "$NVIM_DIR"
     sudo tar xzf "$TMPDIR/nvim.tar.gz" -C /opt/
     sudo ln -sf "$NVIM_DIR/bin/nvim" "$NVIM_BIN"
